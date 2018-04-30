@@ -4,6 +4,7 @@ package com.mercari.mercaritest;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.net.URL;
@@ -36,12 +37,9 @@ public class ImageDownloader {
             String imageURL = URL[0];
 
             Bitmap bitmap = null;
-            try {/*
+            try {
                 // Download Image from URL
-                InputStream input = new java.net.URL(imageURL).openStream();
-                // Decode Bitmap
-                bitmap = BitmapFactory.decodeStream(input);*/
-                URL url = new URL(imageURL);
+                URL url = new URL(imageURL.replace("http://", "https://"));
                 InputStream in = url.openConnection().getInputStream();
                 BufferedInputStream bis = new BufferedInputStream(in,1024*8);
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -56,7 +54,6 @@ public class ImageDownloader {
 
                 byte[] data = out.toByteArray();
                 bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                bitmap = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 e.printStackTrace();
             }
